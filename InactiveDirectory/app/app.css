@@ -130,7 +130,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .o-toolbar {
     background-image: -webkit-linear-gradient(top, rgb(44, 44, 44), rgb(32, 32, 32));
-    background-image: -webkit-linear-gradient(top, rgb(255, 255, 255), rgb(220, 220, 220));
+    /*background-image: -webkit-linear-gradient(top, rgb(255, 255, 255), rgb(220, 220, 220));*/
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
     margin-bottom: 10px;
