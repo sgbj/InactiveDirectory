@@ -7,6 +7,8 @@
 
     <title>Inactive Directory</title>
 
+    <link href='http://fonts.googleapis.com/css?family=Sintony' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Rambla:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet nofollow" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" />
     <link rel="stylesheet nofollow" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap-theme.min.css" />
     <link rel="stylesheet nofollow" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.2/css/font-awesome.min.css" />
@@ -111,12 +113,14 @@
             }
         });
 
-        $(".o-panel-body").niceScroll({cursorborder: null,cursorwidth: 8});
+        $(".o-panel-body").niceScroll({cursorborder: null,cursorwidth: 8,cursorcolor: '#eee'});
 
         $(window).resize(function () {
             $('.o-panel-body').height($(window).height() - 183);
             $('.o-panel-body').getNiceScroll().resize();
         });
+
+        $(window).resize();
     </script>
 </body>
 </html>
