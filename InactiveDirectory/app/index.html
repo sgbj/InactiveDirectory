@@ -1,0 +1,122 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Inactive Directory</title>
+
+    <link rel="stylesheet nofollow" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" />
+    <link rel="stylesheet nofollow" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap-theme.min.css" />
+    <link rel="stylesheet nofollow" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.2/css/font-awesome.min.css" />
+    <link rel="stylesheet nofollow" href="http://jamesflorentino.github.io/nanoScrollerJS/css/nanoscroller.css" />
+    <link rel="stylesheet" href="app.css" />
+
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.5.1/jquery.nicescroll.js"></script>
+
+    <style>
+        body {
+            font-size: 1.6em;
+        }
+        #entries i {
+            font-size: .8em;
+            line-height: 1.9em;
+        }
+        .o-panel-body {
+            overflow: auto;
+            margin: 5px;
+        }
+    </style>
+
+    <script>
+        function loadEntries() {
+            var entries = app.getEntries('LDAP://DC=OSCN,DC=NET');
+            for (var i = 0; i < entries.length; i++) {
+                $('#entries').append('<li data-name="' + entries[i].name + '" data-count="' + entries[i].count + '"><i class="fa-li fa fa-folder"></i> ' + entries[i].name + '</li>');
+            }
+        }
+    </script>
+</head>
+<body>
+    
+    
+
+
+    <div class="o-panel o-frame">
+        <div id="toolbar" class="o-toolbar">
+            <ul id="menuLeft" class="list-inline pull-left">
+                <li><a href="#">File</a></li>
+            </ul>
+            <ul id="menuRight" class="list-inline pull-right">
+                <li><a href="#" onclick="app.minimize();"><i class="fa fa-minus fa-fw"></i></a></li>
+                <li><a href="#" onclick="app.maximize();"><i id="maximize" class="fa fa-expand fa-fw"></i></a></li>
+                <li><a href="#" onclick="app.close();"><i class="fa fa-times fa-fw"></i></a></li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+
+        <div class="o-panel-header">
+            <h1>Inactive Directory</h1>
+            <!--<ul class="list-inline">
+                <li><a href="#" class="o-button-secret"><i class="fa fa-chevron-left fa-fw"></i></a></li>
+                <li><a href="#" class="o-button-secret"><i class="fa fa-chevron-right fa-fw"></i></a></li>
+            </ul>-->
+        </div>
+
+        <div class="o-panel-well">
+            <div class="o-bridge">
+                <input type="button" value="Load" class="o-button" />
+                <input type="button" value="Save" class="o-button o-button-orange" />
+                <input type="text" class="o-text-control pull-right" placeholder="Search..." />
+                <div class="clearfix"></div>
+            </div>
+            <div class="o-panel-body">
+
+            <ul id="entries" class="fa-ul">
+    </ul>
+            </div>
+            
+        </div>
+        <div class="o-panel-footer">
+            
+        </div>
+    </div>
+
+
+    <script>
+        $(document).on("click", "#entries li", function (e) {
+            e.stopPropagation();
+            var entry = $(this);
+            entry.find('> i').toggleClass('fa-folder fa-folder-open');
+            if (entry.children().not('i').length > 0) {
+                entry.children().not('i').remove();
+            } else {
+                var name = entry.data('name');
+                var entries = app.getEntries('LDAP://' + name.replace('/', '\\/') + ',DC=OSCN,DC=NET');
+                var s = '<ul class="fa-ul">';
+                for (var i = 0; i < entries.length; i++) {
+                    if (entries[i].count > 0) {
+                        s += '<li data-name="' + entries[i].name + ',' + name + '" data-count="' + entries[i].count + '"><i class="fa-li fa fa-folder"></i> ' + entries[i].name + '</li>';
+                    } else {
+                        s += '<li data-name="' + entries[i].name + ',' + name + '" data-count="' + entries[i].count + '"><i class="fa-li fa fa-file"></i> ' + entries[i].name + '</li>';
+                    }
+                }
+                s += '</ul>';
+                entry.append(s);
+            }
+        });
+
+        $(".o-panel-body").niceScroll({cursorborder: null,cursorwidth: 8});
+
+        $(window).resize(function () {
+            $('.o-panel-body').height($(window).height() - 183);
+            $('.o-panel-body').getNiceScroll().resize();
+        });
+    </script>
+</body>
+</html>

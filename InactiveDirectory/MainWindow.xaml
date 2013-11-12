@@ -1,0 +1,25 @@
+﻿<Window
+        x:Class="InactiveDirectory.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:core="clr-namespace:Awesomium.Core;assembly=Awesomium.Core"
+        xmlns:data="http://schemas.awesomium.com/winfx/data"
+        xmlns:awe="http://schemas.awesomium.com/winfx"
+        Width="600" 
+        Height="668"
+        Title="{Binding Title, ElementName=webControl}"
+        AllowsTransparency="True"
+        WindowStyle="None"
+        Background="Transparent">
+    <Window.Resources>
+        <awe:WebSessionProvider x:Key="webSession" DataPath=".\Cache">
+            <awe:WebSessionProvider.DataSources>
+                <data:ResourceDataSourceProvider x:Key="local" Type="Packed" />
+            </awe:WebSessionProvider.DataSources>
+            <core:WebPreferences SmoothScrolling="True" DefaultEncoding="utf-8" />
+        </awe:WebSessionProvider>
+    </Window.Resources>
+    <DockPanel>
+        <awe:WebControl IsTransparent="True" WebSession="{Binding Source={StaticResource webSession}}" Name="webControl" DocumentReady="webControl_DocumentReady" Source="asset://local/app/index.html" PreviewMouseDown="webControl_PreviewMouseDown" />
+    </DockPanel>
+</Window>
